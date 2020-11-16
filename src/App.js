@@ -6,14 +6,14 @@ import Todo from './components/Todo';
 
 const FILTER_MAP = {
   All: () => true,
-  Active: task => !task.completed,
-  completed: task => task.completed
+  Active: (task) => !task.completed,
+  completed: (task) => task.completed,
 };
 const FILTER_NAMES = Object.keys(FILTER_MAP);
 
 function App(props) {
   const [tasks, setTasks] = useState(props.tasks);
-  const [filter, setFilter] = useState('All')
+  const [filter, setFilter] = useState('All');
 
   function toggleTaskCompleted(id) {
     const updatedTasks = tasks.map((task) => {
@@ -42,21 +42,26 @@ function App(props) {
   }
 
   const taskList = tasks
-  .filter(FILTER_MAP[filter])
-  .map((task) => (
-    <Todo
-      id={task.id}
-      name={task.name}
-      completed={task.completed}
-      key={task.id}
-      toggleTaskCompleted={toggleTaskCompleted}
-      deleteTask={deleteTask}
-      editTask={editTask}
-    />
-  ));
+    .filter(FILTER_MAP[filter])
+    .map((task) => (
+      <Todo
+        id={task.id}
+        name={task.name}
+        completed={task.completed}
+        key={task.id}
+        toggleTaskCompleted={toggleTaskCompleted}
+        deleteTask={deleteTask}
+        editTask={editTask}
+      />
+    ));
 
-  const filterList = FILTER_NAMES.map(name => (
-    <FilterButton key={name} name={name} isPressed={name === filter} setFilter={setFilter} />
+  const filterList = FILTER_NAMES.map((name) => (
+    <FilterButton
+      key={name}
+      name={name}
+      isPressed={name === filter}
+      setFilter={setFilter}
+    />
   ));
 
   function addTask(name) {
